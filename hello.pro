@@ -2,8 +2,44 @@ TEMPLATE = app
 CONFIG += console c++11
 CONFIG -= app_bundle
 CONFIG -= qt
+DEFINES += CPU_ONLY USE_OPENCV
 
 SOURCES += main.cpp
+
+unix{
+#opencv
+LIBS += -lopencv_core -lopencv_highgui -lopencv_imgcodecs -lopencv_imgproc
+
+#glog
+LIBS += -lglog
+
+#boost
+LIBS += -lboost_system -lboost_filesystem -lm -lboost_thread -lboost_date_time -lboost_regex
+
+#gflags
+LIBS += -lgflags
+
+#protbuf
+LIBS += -lprotobuf
+
+#hdf5
+LIBS += -lhdf5 -lhdf5_hl
+
+#levelDB
+LIBS += -lleveldb
+
+#lmdb
+LIBS += -llmdb
+
+#openblas
+LIBS += -lcblas -latlas
+
+#caffe
+INCLUDEPATH += /home/duino/src/caffe/include
+LIBS += -L/home/duino/src/caffe/build_qt
+CONFIG(debug, debug|release): LIBS += -lcaffed
+CONFIG(release, debug|release): LIBS += -lcaffe
+}
 
 win32{
 # caffe bug. Refer to http://blog.csdn.net/fangjin_kl/article/details/50936952
